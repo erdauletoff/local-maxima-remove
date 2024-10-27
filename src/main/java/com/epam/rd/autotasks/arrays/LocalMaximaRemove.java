@@ -10,10 +10,28 @@ public class LocalMaximaRemove {
         System.out.println(Arrays.toString(removeLocalMaxima(array)));
     }
 
-    public static int[] removeLocalMaxima(int[] array){
+    public static int[] removeLocalMaxima(int[] array) {
+        int len = array.length;
+        boolean[] isLocalMaxima = new boolean[len];
+        int countLocalMaxima = 0;
 
-        //put your code here
+        for (int i = 0; i < len; i++) {
+            if ((i == 0 && array[i] > array[i + 1]) ||
+                    (i == len - 1 && array[i] > array[i - 1]) ||
+                    (i > 0 && i < len - 1 && array[i] > array[i - 1] && array[i] > array[i + 1])) {
+                isLocalMaxima[i] = true;
+                countLocalMaxima++;
+            }
+        }
 
-        throw new UnsupportedOperationException();
+        int[] result = new int[len - countLocalMaxima];
+        int resultPos = 0;
+        for (int i = 0; i < len; i++) {
+            if (!isLocalMaxima[i]) {
+                result[resultPos++] = array[i];
+            }
+        }
+
+        return result;
     }
 }
